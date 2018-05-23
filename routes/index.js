@@ -12,6 +12,8 @@ router.get('/', function(req,res){
 
 /* GET home page. */
 router.get('/register', function(req, res, next) {
+  console.log(req.user); 
+  console.log(req.isAuthenticated())
   res.render('register', { title: 'Registration' });
 });
 
