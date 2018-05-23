@@ -44,8 +44,14 @@ router.post('/register', function(req, res, next) {
   bcrypt.hash(password, saltRounds, function(err, hash) {
       db.query('INSERT INTO users (username, email, password) VALUES(?, ?, ?)',[username, email, hash], function(error, results, fields){
         if (error) throw error;
-    
-        res.render('register', { title: 'Registration Complete' });
+        
+        db.query('SELECT LAST_INSERT_ID() as user_id', function(error, results, fields) {
+            if (error) throw error;
+            console.log(results[0])
+            req.login(results[0], function(err) {
+              res.redirect('/');
+            } )
+        })
       })
   });
  
